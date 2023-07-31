@@ -23,7 +23,10 @@ defmodule KitchenCalculator do
     end
   end
 
+  # given a volume pair tuple and desired unit, convert to that unit
   def convert(volume_pair, unit) do
-    get_volume(volume_pair)
+    volume_pair
+    |> to_milliliter
+    |> from_milliliter(unit)
   end
 end

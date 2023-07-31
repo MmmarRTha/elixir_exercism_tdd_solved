@@ -71,22 +71,18 @@ defmodule KitchenCalculatorTest do
   end
 
   describe "convert from x to y:" do
-    @tag task_id: 4
     test "teaspoon to tablespoon" do
       assert KitchenCalculator.convert({:teaspoon, 15}, :tablespoon) == {:tablespoon, 5}
     end
 
-    @tag task_id: 4
     test "cups to fluid ounces" do
       assert KitchenCalculator.convert({:cup, 4}, :fluid_ounce) == {:fluid_ounce, 32}
     end
 
-    @tag task_id: 4
     test "fluid ounces to teaspoons" do
       assert KitchenCalculator.convert({:fluid_ounce, 4}, :teaspoon) == {:teaspoon, 24}
     end
 
-    @tag task_id: 4
     test "tablespoons to cups" do
       assert KitchenCalculator.convert({:tablespoon, 320}, :cup) == {:cup, 20}
     end
