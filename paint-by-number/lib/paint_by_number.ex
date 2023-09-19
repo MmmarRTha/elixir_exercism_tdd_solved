@@ -20,18 +20,28 @@ defmodule PaintByNumber do
   end
 
   def prepend_pixel(picture, color_count, pixel_color_index) do
-    IO.inspect(palette_bit_size(color_count), label: "palette_bit_size debbuging")
+    <<pixel_color_index::size(palette_bit_size(color_count)), picture::bitstring>>
   end
 
   def get_first_pixel(picture, color_count) do
-    # Please implement the get_first_pixel/2 function
+    palette_bit_size = palette_bit_size(color_count)
+
+    case picture do
+        <<pixel::size(palette_bit_size), _rest::bitstring>> -> pixel
+        _ -> nil
+    end
   end
 
   def drop_first_pixel(picture, color_count) do
-    # Please implement the drop_first_pixel/2 function
+    palette_bit_size = palette_bit_size(color_count)
+
+    case picture do
+        <<_pixel::size(palette_bit_size), rest::bitstring>> -> rest
+        _ -> <<>>
+    end
   end
 
   def concat_pictures(picture1, picture2) do
-    # Please implement the concat_pictures/2 function
+    <<picture1::bitstring, picture2::bitstring>>
   end
 end
