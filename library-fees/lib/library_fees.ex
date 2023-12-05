@@ -5,8 +5,8 @@ defmodule LibraryFees do
   end
 
   def before_noon?(datetime) do
-    beforeNoonTime = NaiveDateTime.to_time(datetime)
-    Time.compare(beforeNoonTime, ~T[12:00:00]) == :lt
+    before_noon_time = NaiveDateTime.to_time(datetime)
+    Time.compare(before_noon_time, ~T[12:00:00]) == :lt
   end
 
   def return_date(checkout_datetime) do
@@ -20,14 +20,28 @@ defmodule LibraryFees do
   end
 
   def days_late(planned_return_date, actual_return_datetime) do
-    # Please implement the days_late/2 function
+    date_retuned = NaiveDateTime.to_date(actual_return_datetime)
+
+    if Date.compare(date_retuned, planned_return_date) == :lt do
+      0
+    else
+      Date.diff(date_retuned, planned_return_date)
+    end
   end
 
   def monday?(datetime) do
-    # Please implement the monday?/1 function
+    Date.day_of_week(NaiveDateTime.to_date(datetime)) == 1
   end
 
   def calculate_late_fee(checkout, return, rate) do
-    # Please implement the calculate_late_fee/3 function
+    checkout_datetime = datetime_from_string(checkout)
+    planned_return = return_date(checkout_datetime)
+    actual_return = datetime_from_string(return)
+
+    days_late = days_late(planned_return, actual_return)
+
+    rate = if monday?(actual_return), do: 0.5 * rate, else: rate
+
+    trunc(days_late * rate)
   end
 end
